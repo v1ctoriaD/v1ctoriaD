@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Execute JavaScript</title>
+</head>
+<body>
+    <button id="executeButton">Execute</button>
+    <button id="resetButton">Reset</button>
+    <div id="output"></div>
+    <script>
+        document.getElementById('executeButton').addEventListener('click', () => {
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = ''; // Clear previous output
+            for (let i = 0; i <= 10; i++) {
+                const p = document.createElement('p');
+                p.textContent = i;
+                outputDiv.appendChild(p);
+            }
+        });
+
+        document.getElementById('resetButton').addEventListener('click', () => {
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = ''; // Clear the output
+        });
+    </script>
+</body>
+</html>
