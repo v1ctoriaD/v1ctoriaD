@@ -4,11 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Execute JavaScript</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        .fade-out {
+            animation: fadeOut 0.5s ease-in-out forwards;
+        }
+    </style>
 </head>
 <body>
-    <button id="executeButton">Execute</button>
-    <button id="resetButton">Reset</button>
-    <div id="output"></div>
+    <section class="section">
+        <div class="container has-text-centered">
+            <div class="buttons is-centered">
+                <button id="executeButton" class="button is-primary">Execute</button>
+                <button id="resetButton" class="button is-danger">Reset</button>
+            </div>
+            <div id="output" class="content"></div>
+        </div>
+    </section>
     <script>
         document.getElementById('executeButton').addEventListener('click', () => {
             const outputDiv = document.getElementById('output');
@@ -16,13 +39,26 @@
             for (let i = 0; i <= 10; i++) {
                 const p = document.createElement('p');
                 p.textContent = i;
+                p.style.opacity = 0;
                 outputDiv.appendChild(p);
+                setTimeout(() => {
+                    p.classList.add('fade-in');
+                }, i * 100); // Stagger the fade-in animation
             }
         });
 
         document.getElementById('resetButton').addEventListener('click', () => {
             const outputDiv = document.getElementById('output');
-            outputDiv.innerHTML = ''; // Clear the output
+            const children = Array.from(outputDiv.children);
+            children.reverse().forEach((child, index) => {
+                child.classList.remove('fade-in');
+                setTimeout(() => {
+                    child.classList.add('fade-out');
+                }, index * 100); // Stagger the fade-out animation in reverse order
+            });
+            setTimeout(() => {
+                outputDiv.innerHTML = ''; // Clear the output after fade-out animation
+            }, children.length * 100 + 500); // Match the duration of the fade-out animation
         });
     </script>
 </body>
