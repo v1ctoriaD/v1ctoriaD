@@ -49,16 +49,15 @@
 
         document.getElementById('resetButton').addEventListener('click', () => {
             const outputDiv = document.getElementById('output');
-            const children = Array.from(outputDiv.children);
-            children.reverse().forEach((child, index) => {
-                child.classList.remove('fade-in');
+            const children = Array.from(outputDiv.children).reverse();
+            children.forEach((child, index) => {
                 setTimeout(() => {
                     child.classList.add('fade-out');
-                }, index * 100); // Stagger the fade-out animation in reverse order
+                    setTimeout(() => {
+                        outputDiv.removeChild(child);
+                    }, 1000); // Adjust this timeout to match the duration of your fade-out animation
+                }, index * 100); // Stagger the fade-out animation
             });
-            setTimeout(() => {
-                outputDiv.innerHTML = ''; // Clear the output after fade-out animation
-            }, children.length * 100 + 500); // Match the duration of the fade-out animation
         });
     </script>
 </body>
